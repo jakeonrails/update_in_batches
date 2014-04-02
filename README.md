@@ -1,6 +1,15 @@
-# UpdateInBatches
+# update_in_batches
 
-TODO: Write a gem description
+This gem adds a class/scope method to your ActiveRecord models, that gives you the same functionality of `update_all` but using the batching behavior of `find_in_batches`.
+
+It is a short cut for:
+
+```ruby
+Model.find_in_batches do |batch|
+  ids = batch.map(&:id)
+  Model.where(id: ids).update_all
+end
+```
 
 ## Installation
 
@@ -18,7 +27,12 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+class Project < ActiveRecord::Base
+end
+
+Project.where(active: true).update_in_batches(active: false)
+```
 
 ## Contributing
 
